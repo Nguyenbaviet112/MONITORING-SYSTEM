@@ -1,6 +1,9 @@
 package model;
 
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class ServerModel {
@@ -34,6 +37,28 @@ public class ServerModel {
 		this.setPort(3007);
 		
 	}
+	
+	public void CreateSocketServer(int port)
+	{
+		try {
+			
+			ServerSocket serverSocket = new ServerSocket(port);
+			
+			while (true)
+			{
+				Socket socket = serverSocket.accept();
+				System.out.println(socket);
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
 	
 	
 }

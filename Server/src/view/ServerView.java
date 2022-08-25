@@ -45,7 +45,7 @@ public class ServerView extends JFrame {
 	 */
 	public ServerView() {
 		this.setTitle("Server");
-		setBounds(100, 100, 539, 360);
+		setBounds(100, 100, 577, 360);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -91,6 +91,9 @@ public class ServerView extends JFrame {
 		IP_textField.setEditable(false);
 		IP_textField.setBounds(50, 44, 120, 19);
 		panel.add(IP_textField);
+		
+		this.show_IP_Port();
+		
 	}
 	
 	public void show_IP_Port()
@@ -101,5 +104,15 @@ public class ServerView extends JFrame {
 		String IP = this.serverModel.getIP()+"";
 		IP_textField.setText(IP);
 	}
+	
+	public void CreateServerSoket()
+	{
+		int port = this.serverModel.getPort();
+		
+		this.serverModel.CreateSocketServer(port);
+		
+		
+	}
+	
 	
 }

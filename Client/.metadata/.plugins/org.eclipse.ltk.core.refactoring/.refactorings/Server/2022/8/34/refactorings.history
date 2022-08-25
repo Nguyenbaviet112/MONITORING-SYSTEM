@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;controller.ServerController&apos; to &apos;ServerListener&apos;&#x0D;&#x0A;- Original project: &apos;Server&apos;&#x0D;&#x0A;- Original element: &apos;controller.ServerController&apos;&#x0D;&#x0A;- Renamed element: &apos;controller.ServerListener&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ServerController&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;controller{ServerController.java[ServerController" matchStrategy="1" name="ServerListener" qualified="false" references="true" similarDeclarations="false" stamp="1661222285175" textual="false" version="1.0"/>
+</session>
