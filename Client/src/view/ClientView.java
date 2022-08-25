@@ -25,18 +25,7 @@ public class ClientView extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClientView frame = new ClientView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -48,6 +37,7 @@ public class ClientView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 		
 		
 		clientModel = new ClientModel();
@@ -87,6 +77,8 @@ public class ClientView extends JFrame {
 		panel.add(btn_Connet_Server);
 		this.setLocationRelativeTo(null);
 		btn_Connet_Server.addActionListener(clientListener);
+		
+		this.setVisible(true);
 	}
 	
 	public void ConnetServer()

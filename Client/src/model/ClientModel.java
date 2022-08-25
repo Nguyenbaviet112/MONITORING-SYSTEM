@@ -10,6 +10,7 @@ public class ClientModel {
 	{
 		try {
 			Socket socket = new Socket(IP, Port);
+			
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
