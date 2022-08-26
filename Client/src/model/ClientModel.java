@@ -6,18 +6,22 @@ import java.net.UnknownHostException;
 
 public class ClientModel {
 	
-	public void ConnetServer(int Port, String IP)
+	public boolean ConnetServer(int Port, String IP)
 	{
 		try {
 			Socket socket = new Socket(IP, Port);
+			System.out.println("Client: " + socket.getLocalAddress() + " " + socket.getLocalPort());
+			System.out.println("Server: " + socket.getInetAddress() + " " + socket.getPort());
 			
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
+			
 		}
+		return true;
 	}
 	
 }

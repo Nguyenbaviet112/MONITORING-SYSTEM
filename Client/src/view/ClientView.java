@@ -11,6 +11,8 @@ import controller.ClientListener;
 import model.ClientModel;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -85,7 +87,27 @@ public class ClientView extends JFrame {
 	{
 		int Port = Integer.parseInt(textField_Port.getText()) ;
 		String IP = textField_IP.getText();
-		this.clientModel.ConnetServer(Port, IP);
+		boolean rs = this.clientModel.ConnetServer(Port, IP);
+		
+		if (rs == false)
+		{
+			JOptionPane.showMessageDialog(this, "connection failed",
+	                "ERROR", JOptionPane.ERROR_MESSAGE);
+			this.clientModel.ConnetServer(Port, IP);
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Successful connection",
+	                "Information", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+		
+	}
+	
+	public void show_ErrorConnect()
+	{
+		JOptionPane.showMessageDialog(this, "connection failed",
+                "ERROR", JOptionPane.ERROR_MESSAGE);
 	}
 	
 }

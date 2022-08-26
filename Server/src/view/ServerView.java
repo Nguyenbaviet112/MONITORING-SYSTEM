@@ -27,18 +27,7 @@ public class ServerView extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ServerView frame = new ServerView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -55,16 +44,17 @@ public class ServerView extends JFrame {
 		
 		ServerListener sl = new ServerListener(this);
 		serverModel = new ServerModel();
+
 		
 		
 		JButton btn_StartServer = new JButton("Start");
 		btn_StartServer.setFont(new Font("Arial", Font.PLAIN, 14));
-		btn_StartServer.setBounds(10, 31, 111, 37);
+		btn_StartServer.setBounds(10, 28, 111, 37);
 		contentPane.add(btn_StartServer);
 		btn_StartServer.addActionListener(sl);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(162, 10, 180, 80);
+		panel.setBounds(162, 10, 207, 80);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -93,6 +83,7 @@ public class ServerView extends JFrame {
 		panel.add(IP_textField);
 		
 		this.show_IP_Port();
+		this.setVisible(true);
 		
 	}
 	
@@ -108,11 +99,7 @@ public class ServerView extends JFrame {
 	public void CreateServerSoket()
 	{
 		int port = this.serverModel.getPort();
-		
-		this.serverModel.CreateSocketServer(port);
-		
+		this.serverModel.CreateServerSocket(port);
 		
 	}
-	
-	
 }
