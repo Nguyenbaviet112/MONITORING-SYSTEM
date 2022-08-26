@@ -9,7 +9,9 @@ public class ClientModel {
 	public boolean ConnetServer(int Port, String IP)
 	{
 		try {
+			
 			Socket socket = new Socket(IP, Port);
+			socket.setSoTimeout(100);
 			System.out.println("Client: " + socket.getLocalAddress() + " " + socket.getLocalPort());
 			System.out.println("Server: " + socket.getInetAddress() + " " + socket.getPort());
 			

@@ -9,12 +9,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
-public class ServerModel extends Thread {
+public class ServerModel extends Thread{
 	
 	private ServerSocket serverSocket;
 	private int port;
 	private String IP;
+	private ArrayList<String> ListClient;
+	private Socket server;
 	
 	public int getPort() {
 		return port;
@@ -29,8 +32,19 @@ public class ServerModel extends Thread {
 		IP = iP;
 	}
 	
+	public ServerModel()
+	{
+		this.ListClient = new ArrayList<String>();
+		this.setPort(3007);
+	}
 	
 	
+	public ArrayList<String> getListClient() {
+		return ListClient;
+	}
+	public void setListClient(ArrayList<String> listClient) {
+		ListClient = listClient;
+	}
 	
 	
 	public void get_IP_Port()
@@ -42,19 +56,16 @@ public class ServerModel extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		this.setPort(3007);
-		
+
 	}
 	
-	public void CreateServerSocket(int port)
+	public void CreateServerSocket()
 	{
+	
 		try {
 			
-			serverSocket = new ServerSocket(port);
+			serverSocket = new ServerSocket(this.port);
 			start();
-
-			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -63,15 +74,20 @@ public class ServerModel extends Thread {
 	}
 	
 	
+	
 	public void run()
 	{
 		while (true)
 		{
-			Socket server;
+			
 			try {
 				server = serverSocket.accept();
-				System.out.println("Client: " + server.getLocalSocketAddress());
-				System.out.println("Client: " + server.getInetAddress());
+				String ip = server.getInetAddress()+"";
+				ip = ip.replace("/", "");
+				ListClient.add(ip);
+				for (String client : ListClient) {
+					System.out.println(client);
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -21,8 +21,8 @@ public class ServerView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField Port_textField;
-	private JTextField IP_textField;
 	private ServerModel serverModel;
+	private JButton btn_StartServer;
 
 	/**
 	 * Launch the application.
@@ -34,7 +34,7 @@ public class ServerView extends JFrame {
 	 */
 	public ServerView() {
 		this.setTitle("Server");
-		setBounds(100, 100, 577, 360);
+		setBounds(100, 100, 415, 152);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -47,14 +47,14 @@ public class ServerView extends JFrame {
 
 		
 		
-		JButton btn_StartServer = new JButton("Start");
+		btn_StartServer = new JButton("Start");
 		btn_StartServer.setFont(new Font("Arial", Font.PLAIN, 14));
-		btn_StartServer.setBounds(10, 28, 111, 37);
+		btn_StartServer.setBounds(10, 35, 111, 37);
 		contentPane.add(btn_StartServer);
 		btn_StartServer.addActionListener(sl);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(162, 10, 207, 80);
+		panel.setBounds(164, 25, 207, 54);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -63,11 +63,6 @@ public class ServerView extends JFrame {
 		lblNewLabel.setBounds(10, 10, 48, 26);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("IP:");
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(10, 46, 45, 13);
-		panel.add(lblNewLabel_1);
-		
 		Port_textField = new JTextField();
 		Port_textField.setFont(new Font("Arial", Font.PLAIN, 14));
 		Port_textField.setBounds(50, 15, 120, 19);
@@ -75,31 +70,24 @@ public class ServerView extends JFrame {
 		panel.add(Port_textField);
 		Port_textField.setColumns(10);
 		
-		IP_textField = new JTextField();
-		IP_textField.setFont(new Font("Arial", Font.PLAIN, 14));
-		IP_textField.setColumns(10);
-		IP_textField.setEditable(false);
-		IP_textField.setBounds(50, 44, 120, 19);
-		panel.add(IP_textField);
-		
-		this.show_IP_Port();
+		this.show_Port();
 		this.setVisible(true);
 		
 	}
 	
-	public void show_IP_Port()
+	public void show_Port()
 	{
 		this.serverModel.get_IP_Port();
 		String Port = this.serverModel.getPort()+"";
 		Port_textField.setText(Port);
-		String IP = this.serverModel.getIP()+"";
-		IP_textField.setText(IP);
-	}
-	
-	public void CreateServerSoket()
-	{
-		int port = this.serverModel.getPort();
-		this.serverModel.CreateServerSocket(port);
 		
 	}
+	
+	public void NewJFrame()
+	{	
+		new ServerManagementView();
+		this.dispose();
+	}
+	
+
 }
