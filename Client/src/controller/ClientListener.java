@@ -18,9 +18,13 @@ public class ClientListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String button = e.getActionCommand();
-		if (button.equals("Kết nối"))
+		if (button.equals("Connect"))
 		{
 			cv.ConnetServer();
+		}
+		else if (button.equals("Disconnect"))
+		{
+			this.cv.change_Stage();
 		}
 	}
 	

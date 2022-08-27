@@ -43,10 +43,20 @@ public class ClientModel {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
 		
 		return true;
+	}
+	
+	public void Disconnet_Server()
+	{
+		try {
+			clientSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

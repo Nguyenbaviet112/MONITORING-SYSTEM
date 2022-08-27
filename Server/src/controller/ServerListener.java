@@ -24,10 +24,9 @@ public class ServerListener implements ActionListener {
 		
 		if (button.equals("Start"))
 		{
-			this.sv.NewJFrame();
+			this.sv.Is_dipose();
 		}
 	
-		
 
 		
 	}

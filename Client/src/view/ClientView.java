@@ -23,6 +23,7 @@ public class ClientView extends JFrame {
 	private JTextField textField_Port;
 	private JTextField textField_IP;
 	private ClientModel clientModel;
+	private JButton btn_Connet_Server;
 
 	/**
 	 * Launch the application.
@@ -73,9 +74,9 @@ public class ClientView extends JFrame {
 		textField_IP.setBounds(139, 56, 145, 27);
 		panel.add(textField_IP);
 		
-		JButton btn_Connet_Server = new JButton("Kết nối");
+		btn_Connet_Server = new JButton("Connect");
 		btn_Connet_Server.setFont(new Font("Arial", Font.PLAIN, 14));
-		btn_Connet_Server.setBounds(330, 32, 85, 33);
+		btn_Connet_Server.setBounds(317, 32, 120, 33);
 		panel.add(btn_Connet_Server);
 		this.setLocationRelativeTo(null);
 		btn_Connet_Server.addActionListener(clientListener);
@@ -99,6 +100,7 @@ public class ClientView extends JFrame {
 		{
 			JOptionPane.showMessageDialog(this, "Successful connection",
 	                "Information", JOptionPane.INFORMATION_MESSAGE);
+			this.btn_Connet_Server.setText("Disconnect");
 		}
 		
 		
@@ -108,6 +110,11 @@ public class ClientView extends JFrame {
 	{
 		JOptionPane.showMessageDialog(this, "connection failed",
                 "ERROR", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void change_Stage()
+	{
+		this.btn_Connet_Server.setText("Connect");
 	}
 	
 }

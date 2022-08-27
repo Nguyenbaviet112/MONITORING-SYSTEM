@@ -10,7 +10,10 @@ import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-public class ServerModel{
+import controller.SerManagementListener;
+import view.ServerManagementView;
+
+public class ServerModel extends Thread{
 	
 	private ServerSocket ServerSocket;
 	private int port;
@@ -19,7 +22,7 @@ public class ServerModel{
 	private Socket clientSocket;
 	private String Path_Server;
 	private WatchFolder wc;
-
+	private ServerManagementView sv_Magenager;
 	
 	
 	public String getPath_Server()
@@ -45,9 +48,10 @@ public class ServerModel{
 		IP = iP;
 	}
 	
-	public ServerModel()
+	public ServerModel(ServerManagementView sv_Magenager)
 	{
 		this.ListClient = new ArrayList<String>();
+		this.sv_Magenager = sv_Magenager;
 		this.setPort(3007);
 	}
 	
@@ -92,7 +96,7 @@ public class ServerModel{
 					e.printStackTrace();
 				}
 				
-				new ServerThread(clientSocket, this).start();
+				new ServerThread(clientSocket, this, this.sv_Magenager).start();
 				
 			}
 			
@@ -103,7 +107,10 @@ public class ServerModel{
 	}
 	
 	
-	
+	public void run()
+	{
+		this.CreateServerSocket();
+	}
 
 	
 	

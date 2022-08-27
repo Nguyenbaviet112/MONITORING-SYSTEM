@@ -43,7 +43,7 @@ public class ServerView extends JFrame {
 		this.setLocationRelativeTo(null);
 		
 		ServerListener sl = new ServerListener(this);
-		serverModel = new ServerModel();
+
 
 		
 		
@@ -64,26 +64,19 @@ public class ServerView extends JFrame {
 		panel.add(lblNewLabel);
 		
 		Port_textField = new JTextField();
+		Port_textField.setText("3007");
+		Port_textField.setEditable(false);
 		Port_textField.setFont(new Font("Arial", Font.PLAIN, 14));
 		Port_textField.setBounds(50, 15, 120, 19);
-		Port_textField.setEditable(false);
 		panel.add(Port_textField);
 		Port_textField.setColumns(10);
 		
-		this.show_Port();
 		this.setVisible(true);
 		
 	}
 	
-	public void show_Port()
-	{
-		this.serverModel.get_IP_Port();
-		String Port = this.serverModel.getPort()+"";
-		Port_textField.setText(Port);
-		
-	}
-	
-	public void NewJFrame()
+
+	public void Is_dipose()
 	{	
 		new ServerManagementView();
 		this.dispose();

@@ -14,9 +14,12 @@ import javax.swing.JTextField;
 import model.ServerModel;
 import model.WatchFolder;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import controller.SerManagementListener;
+import javax.swing.JList;
+import java.awt.Color;
 
 public class ServerManagementView extends JFrame {
 
@@ -25,7 +28,8 @@ public class ServerManagementView extends JFrame {
 	private JTextField textField_SVIP;
 	private ServerModel serverModel;
 	private SerManagementListener listener;
-	
+	private JList jlist;
+	public DefaultListModel listModel;
 
 
 
@@ -33,6 +37,7 @@ public class ServerManagementView extends JFrame {
 	 * Create the frame.
 	 */
 	public ServerManagementView() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1338, 763);
 		contentPane = new JPanel();
@@ -41,7 +46,7 @@ public class ServerManagementView extends JFrame {
 		contentPane.setLayout(null);
 		this.setLocationRelativeTo(null);
 		
-		this.serverModel = new ServerModel();
+		this.serverModel = new ServerModel(this);
 		this.listener = new SerManagementListener(this, this.serverModel);
 		
 		
@@ -67,16 +72,27 @@ public class ServerManagementView extends JFrame {
 		textField_SVIP.setEditable(false);
 		contentPane.add(textField_SVIP);
 		
+		listModel = new DefaultListModel();
+		jlist = new JList(listModel);
+		jlist.setBackground(Color.WHITE);
+		
+		jlist.setBounds(10, 164, 173, 532);
+		contentPane.add(jlist);
+		
 		JButton btn_BrowerFolder = new JButton("Brower");
 		btn_BrowerFolder.setFont(new Font("Arial", Font.PLAIN, 14));
-		btn_BrowerFolder.setBounds(25, 76, 173, 38);
+		btn_BrowerFolder.setBounds(1141, 3, 173, 38);
 		contentPane.add(btn_BrowerFolder);
+		
+		
+		
 		btn_BrowerFolder.addActionListener(listener);
 		
-		this.setVisible(true);
+		
 		
 		this.show_IP_Port();
-		
+		this.setVisible(true);
+		this.serverModel.start();
 		
 	}
 	
@@ -99,4 +115,6 @@ public class ServerManagementView extends JFrame {
 		    File yourFolder = fc.getSelectedFile();
 		}
 	}
+	
+	
 }

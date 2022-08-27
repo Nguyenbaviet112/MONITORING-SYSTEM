@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import view.ServerManagementView;
+
 
 
 public class ServerThread extends Thread 
@@ -14,12 +16,14 @@ public class ServerThread extends Thread
 	private ArrayList<String> ListClient;
 	private Socket socket;
 	private DataInputStream in;
+	private ServerManagementView sv_Manager;
 	
-	public ServerThread(Socket clientSocket, ServerModel sv_Model)
+	public ServerThread(Socket clientSocket, ServerModel sv_Model, ServerManagementView sv_Manager)
 	{
 		this.socket = clientSocket;
 		this.sv_Model = sv_Model;
 		this.ListClient = new ArrayList<String>();
+		this.sv_Manager = sv_Manager;
 	}
 	
 	public void run() 
@@ -31,7 +35,7 @@ public class ServerThread extends Thread
 		
 		for (String client : ListClient)
 		{
-			System.out.println(client);
+			this.sv_Manager.listModel.addElement(client);
 		}
 		
 		
