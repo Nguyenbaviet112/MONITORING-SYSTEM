@@ -41,8 +41,17 @@ public class ServerThread extends Thread
 		
 		
 		try {
+			
 			in = new DataInputStream(socket.getInputStream());
-			this.sv_Model.setPathServer(in.readUTF());
+			
+			while (in.available() > 0)
+			{
+				System.out.println(in.readUTF());
+			}
+			
+			
+			
+			//this.sv_Model.setPathServer(in.readUTF());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

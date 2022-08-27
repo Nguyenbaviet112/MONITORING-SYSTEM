@@ -27,7 +27,8 @@ public class ClientModel {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
+			
+			String ip_client = clientSocket.getLocalAddress().toString();
 			String message = "C:\\Users\\NguyenBaViet\\Music\\Client_01";
 			
 			wc = new WatchFolder();
@@ -37,8 +38,9 @@ public class ClientModel {
 			
 			DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 			
-			
+			out.writeUTF(ip_client);
 			out.writeUTF(message);
+			
 			
 
 		} catch (Exception e) {

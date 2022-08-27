@@ -20,6 +20,8 @@ import javax.swing.JFileChooser;
 import controller.SerManagementListener;
 import javax.swing.JList;
 import java.awt.Color;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ServerManagementView extends JFrame {
 
@@ -30,6 +32,7 @@ public class ServerManagementView extends JFrame {
 	private SerManagementListener listener;
 	private JList jlist;
 	public DefaultListModel listModel;
+	private JTable table_Server;
 
 
 
@@ -76,13 +79,33 @@ public class ServerManagementView extends JFrame {
 		jlist = new JList(listModel);
 		jlist.setBackground(Color.WHITE);
 		
-		jlist.setBounds(10, 164, 173, 532);
+		jlist.setBounds(10, 164, 144, 532);
 		contentPane.add(jlist);
 		
 		JButton btn_BrowerFolder = new JButton("Brower");
 		btn_BrowerFolder.setFont(new Font("Arial", Font.PLAIN, 14));
-		btn_BrowerFolder.setBounds(1141, 3, 173, 38);
+		btn_BrowerFolder.setBounds(1141, 10, 173, 38);
 		contentPane.add(btn_BrowerFolder);
+		
+		table_Server = new JTable();
+		table_Server.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, ""},
+			},
+			new String[] {
+				"STT", "Path Monitoring", "Time", "Action", "IP client", "Detail"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		table_Server.setFont(new Font("Arial", Font.PLAIN, 14));
+		table_Server.setBounds(202, 174, 1112, 520);
+		contentPane.add(table_Server);
 		
 		
 		
@@ -115,6 +138,4 @@ public class ServerManagementView extends JFrame {
 		    File yourFolder = fc.getSelectedFile();
 		}
 	}
-	
-	
 }
