@@ -8,8 +8,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.io.File;
+
 import javax.swing.JTextField;
 import model.ServerModel;
+import model.WatchFolder;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import controller.SerManagementListener;
 
 public class ServerManagementView extends JFrame {
 
@@ -17,6 +24,8 @@ public class ServerManagementView extends JFrame {
 	private JTextField textField_Port;
 	private JTextField textField_SVIP;
 	private ServerModel serverModel;
+	private SerManagementListener listener;
+	
 
 
 
@@ -33,6 +42,7 @@ public class ServerManagementView extends JFrame {
 		this.setLocationRelativeTo(null);
 		
 		this.serverModel = new ServerModel();
+		this.listener = new SerManagementListener(this, this.serverModel);
 		
 		
 		JLabel lblNewLabel = new JLabel("Port:");
@@ -57,9 +67,17 @@ public class ServerManagementView extends JFrame {
 		textField_SVIP.setEditable(false);
 		contentPane.add(textField_SVIP);
 		
+		JButton btn_BrowerFolder = new JButton("Brower");
+		btn_BrowerFolder.setFont(new Font("Arial", Font.PLAIN, 14));
+		btn_BrowerFolder.setBounds(25, 76, 173, 38);
+		contentPane.add(btn_BrowerFolder);
+		btn_BrowerFolder.addActionListener(listener);
+		
 		this.setVisible(true);
+		
 		this.show_IP_Port();
-		this.serverModel.CreateServerSocket();
+		
+		
 	}
 	
 	public void show_IP_Port()
@@ -69,5 +87,16 @@ public class ServerManagementView extends JFrame {
 		textField_Port.setText(Port);
 		String IP = this.serverModel.getIP()+"";
 		textField_SVIP.setText(IP);
+	}
+	
+	public void show_Folder(String path)
+	{
+		JFileChooser fc = new JFileChooser();
+		fc.setCurrentDirectory(new java.io.File(path)); // start at application current directory
+		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int returnVal = fc.showSaveDialog(this);
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+		    File yourFolder = fc.getSelectedFile();
+		}
 	}
 }

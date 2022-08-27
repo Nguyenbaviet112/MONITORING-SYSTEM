@@ -1,24 +1,37 @@
 package model;
 
+
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-public class ServerModel extends Thread{
+public class ServerModel{
 	
-	private ServerSocket serverSocket;
+	private ServerSocket ServerSocket;
 	private int port;
 	private String IP;
 	private ArrayList<String> ListClient;
-	private Socket server;
+	private Socket clientSocket;
+	private String Path_Server;
+	private WatchFolder wc;
+
 	
+	
+	public String getPath_Server()
+	{
+		return this.Path_Server;
+	}
+	
+	public void setPathServer(String path_Server)
+	{
+		this.Path_Server = path_Server;
+	}
+
 	public int getPort() {
 		return port;
 	}
@@ -61,11 +74,27 @@ public class ServerModel extends Thread{
 	
 	public void CreateServerSocket()
 	{
-	
+		this.wc = new WatchFolder();
+		Thread t1 = new Thread(wc);
+		t1.start();
+		
 		try {
 			
-			serverSocket = new ServerSocket(this.port);
-			start();
+			ServerSocket = new ServerSocket(this.port);
+			while (true)
+			{
+				
+				try {
+					clientSocket = ServerSocket.accept();
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				new ServerThread(clientSocket, this).start();
+				
+			}
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -75,26 +104,7 @@ public class ServerModel extends Thread{
 	
 	
 	
-	public void run()
-	{
-		while (true)
-		{
-			
-			try {
-				server = serverSocket.accept();
-				String ip = server.getInetAddress()+"";
-				ip = ip.replace("/", "");
-				ListClient.add(ip);
-				for (String client : ListClient) {
-					System.out.println(client);
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-	}
+
 	
 	
 }

@@ -10,6 +10,7 @@ import view.ServerView;
 public class ServerListener implements ActionListener {
 
 	private ServerView sv;
+
 	
 	public ServerListener(ServerView sv)
 	{
@@ -25,6 +26,8 @@ public class ServerListener implements ActionListener {
 		{
 			this.sv.NewJFrame();
 		}
+	
+		
 
 		
 	}
