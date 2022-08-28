@@ -1,0 +1,6 @@
+1-C:\Users\NguyenBaViet\Music\Client_01-2022/08/28 22:06:50-Connected-192.168.1.60 Server-Connected to server
+2-C:\Users\NguyenBaViet\Music\Client_01-2022/08/28 22:07:08-ENTRY_CREATE New Text Document-192.168.1.60-ENTRY_CREATE New Text Document successfuly 21424069.txt
+3-C:\Users\NguyenBaViet\Music\Client_01-2022/08/28 22:07:27-ENTRY_MODIFY -192.168.1.60-ENTRY_MODIFY  successfuly 21424069.txt
+4-C:\Users\NguyenBaViet\Music\Client_01-2022/08/28 22:07:37-ENTRY_DELETE -192.168.1.60-ENTRY_DELETE  successfuly 21424069.txt
+5-C:\Users\NguyenBaViet\Music\Client_01-2022/08/28 22:07:49-ENTRY_CREATE New folder-192.168.1.60-ENTRY_CREATE New folder successfuly abcde
+6-C:\Users\NguyenBaViet\Music\Client_01-2022/08/28 22:08:16-Disconnected-192.168.1.60 Server-Disconnected to server

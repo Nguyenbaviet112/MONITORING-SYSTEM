@@ -1,7 +1,6 @@
 package model;
 
-public class ServerInfo {
-	
+public class ClientInfo {
 	private String STT;
 	private String PathMonitoring;
 	private String Time;
@@ -47,9 +46,9 @@ public class ServerInfo {
 	}
 	@Override
 	public String toString() {
-
 		return STT + "-" + PathMonitoring + "-" + Time + "-" + Action + "-" + IPClient + "-" + Detail;
 	}
+	
 	
 	
 	

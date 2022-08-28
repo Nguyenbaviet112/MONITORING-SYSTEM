@@ -1,36 +1,19 @@
 package model;
-
 import java.io.File;
 import java.io.IOException;
-import java.net.Socket;
 import java.nio.file.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import model.ServerInfo;
-import model.ServerModel;
-import view.ServerManagementView;
 
-public class WatchFolder implements Runnable {
-
+public class WatchFolder {
+	
 	private Set<String> Set_Action;
-	private ServerModel sv_Model;
-	private ServerManagementView sv_Manager;
-	
-	public WatchFolder(ServerModel sv_Model, ServerManagementView sv_Manager)
-	{
-		this.sv_Manager = sv_Manager;
-		this.sv_Model = sv_Model;
-		
-	}
-	
-	private static Map<WatchKey, Path> keyPathMap = new HashMap<>();
+   private static Map<WatchKey, Path> keyPathMap = new HashMap<>();
 
 	public void Init(String path) {
 		try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
@@ -47,29 +30,39 @@ public class WatchFolder implements Runnable {
 		}
 	}
 
-	public void registerDir(Path path, WatchService watchService) throws IOException {
+   public void registerDir (Path path, WatchService watchService) throws
+                       IOException {
 
-		if (!Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
-			return;
-		}
 
-		
-		WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
-				StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_DELETE);
-		keyPathMap.put(key, path);
+       if (!Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
+           return;
+       }
 
-		for (File f : path.toFile().listFiles()) {
-			registerDir(f.toPath(), watchService);
-		}
-	}
+
+       WatchKey key = path.register(watchService,
+                           StandardWatchEventKinds.ENTRY_CREATE,
+                           StandardWatchEventKinds.ENTRY_MODIFY,
+                           StandardWatchEventKinds.ENTRY_DELETE);
+       keyPathMap.put(key, path);
+
+
+       for (File f : path.toFile().listFiles()) {
+           registerDir(f.toPath(), watchService);
+       }
+   }
 
 	public void startListening(WatchService watchService) throws Exception {
-		while (true) {
 		
+		
+		
+		while (true) {
+			
+			
 			List<String> List_Create = new ArrayList<String>();
 			WatchKey queuedKey = watchService.take();
+			
 			for (WatchEvent<?> watchEvent : queuedKey.pollEvents()) {
-
+				
 				this.Set_Action = new HashSet<String>();
 				
 				String context = watchEvent.context().toString();
@@ -98,7 +91,7 @@ public class WatchFolder implements Runnable {
 								action = "New Text Document";
 							}
 							
-							String detail = watchEvent.kind() + "-" + action + "-" + watchEvent.context();
+							String detail = watchEvent.kind() + " " + action + " " + watchEvent.context();
 							
 							
 							Set_Action.add(detail);
@@ -107,31 +100,14 @@ public class WatchFolder implements Runnable {
 							List<String> List_Action = new ArrayList<String>();
 							List_Action.addAll(Set_Action);
 							
-							Set<String> temp_Set = new HashSet<>(List_Action);
-							List_Action = new ArrayList<String>();
-							List_Action.addAll(temp_Set);
-							
+							if (List_Action.contains("ENTRY_DELETE") && List_Action.contains("ENTRY_CREATE"))
+							{
+								System.out.println("RENAME");
+							}
 							
 							for (String s: List_Action)
 							{
-								String[] temp = s.split("-");
-								
-								ServerInfo sv_info = new ServerInfo();
-
-								sv_info.setSTT(this.sv_Model.ListClientInfo.size() + 1 + "");
-								sv_info.setPathMonitoring(this.sv_Model.getPath_Server());
-								sv_info.setAction(temp[0] + " " + temp[1]);
-								String Time_Connect = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-										.format(Calendar.getInstance().getTime());
-								sv_info.setTime(Time_Connect);
-								sv_info.setIPClient(this.sv_Model.clientSocket.getInetAddress().toString().replace("/", "") );
-								sv_info.setDetail(temp[0] + " " + temp[1] + " " + "successfuly" + " " +temp[2]);
-
-								this.sv_Model.ListClientInfo.add(sv_info);
-
-								this.sv_Manager.defaultTableModel.addRow(new Object[] { sv_info.getSTT(), sv_info.getPathMonitoring(),
-										sv_info.getTime(), sv_info.getAction(), sv_info.getIPClient(), sv_info.getDetail() });
-								
+								System.out.println(s);
 							}
 						}
 					}
@@ -139,10 +115,11 @@ public class WatchFolder implements Runnable {
 				}
 				
 				
-
 				
 				
-
+				
+				
+				// do something useful here
 
 				if (watchEvent.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
 
@@ -155,7 +132,9 @@ public class WatchFolder implements Runnable {
 
 					registerDir(path, watchService);
 				}
-
+				
+				
+			
 			}
 			if (!queuedKey.reset()) {
 				keyPathMap.remove(queuedKey);
@@ -165,10 +144,4 @@ public class WatchFolder implements Runnable {
 			}
 		}
 	}
-
-	@Override
-	public void run() {
-		Init("C:\\Users\\NguyenBaViet\\Music\\Client_01");
-	}
-	
 }

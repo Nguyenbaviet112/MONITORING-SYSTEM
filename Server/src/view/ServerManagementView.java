@@ -8,9 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JTextField;
+
 import model.ServerModel;
 import model.WatchFolder;
 
@@ -36,6 +41,8 @@ public class ServerManagementView extends JFrame {
 	private JTable table_Server;
 	public DefaultTableModel defaultTableModel;
 	private JScrollPane scrollPane;
+	private JTextField textField_Path;
+	
 
 
 
@@ -45,7 +52,7 @@ public class ServerManagementView extends JFrame {
 	public ServerManagementView() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1338, 764);
+		setBounds(100, 100, 1370, 764);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -55,6 +62,7 @@ public class ServerManagementView extends JFrame {
 		this.serverModel = new ServerModel(this);
 		this.listener = new SerManagementListener(this, this.serverModel);
 		
+		this.addWindowListener(listener);
 		
 		JLabel lblNewLabel = new JLabel("Port:");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -65,6 +73,7 @@ public class ServerManagementView extends JFrame {
 		lblServerIp.setFont(new Font("Arial", Font.PLAIN, 15));
 		lblServerIp.setBounds(251, 10, 77, 24);
 		contentPane.add(lblServerIp);
+		
 		
 		textField_Port = new JTextField();
 		textField_Port.setBounds(73, 10, 125, 23);
@@ -85,13 +94,8 @@ public class ServerManagementView extends JFrame {
 		jlist.setBounds(10, 176, 106, 520);
 		contentPane.add(jlist);
 		
-		JButton btn_BrowerFolder = new JButton("Brower");
-		btn_BrowerFolder.setFont(new Font("Arial", Font.PLAIN, 14));
-		btn_BrowerFolder.setBounds(1141, 10, 173, 38);
-		contentPane.add(btn_BrowerFolder);
-		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(126, 176, 1243, 520);
+		scrollPane.setBounds(126, 176, 1220, 520);
 		contentPane.add(scrollPane);
 		
 		
@@ -99,12 +103,26 @@ public class ServerManagementView extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"STT", "Path Monitoring", "Time", "New column", "ip", "Detail"
+				"STT", "Path Monitoring", "Time", "Acction", "ip", "Detail"
 			}
 		);
 		table_Server = new JTable(defaultTableModel);
 		table_Server.getColumnModel().getColumn(1).setPreferredWidth(90);
 		scrollPane.setViewportView(table_Server);
+		
+		textField_Path = new JTextField();
+		textField_Path.setFont(new Font("Arial", Font.PLAIN, 14));
+		textField_Path.setBounds(708, 21, 442, 33);
+		contentPane.add(textField_Path);
+		textField_Path.setColumns(10);
+		textField_Path.setEditable(false);
+		textField_Path.setText(this.serverModel.getPath_Server().toString());
+		
+		JButton btn_LoadLog = new JButton("Load Log");
+		btn_LoadLog.setFont(new Font("Arial", Font.PLAIN, 14));
+		btn_LoadLog.setBounds(1175, 10, 171, 54);
+		contentPane.add(btn_LoadLog);
+		btn_LoadLog.addActionListener(listener);
 		
 
 		table_Server = new JTable(defaultTableModel);
@@ -112,12 +130,8 @@ public class ServerManagementView extends JFrame {
 		
 		
 		
-		btn_BrowerFolder.addActionListener(listener);
-		
-		
-		
 		this.show_IP_Port();
-		this.serverModel.start();
+		this.serverModel.start();;
 		this.setVisible(true);
 		
 	}
@@ -131,14 +145,6 @@ public class ServerManagementView extends JFrame {
 		textField_SVIP.setText(IP);
 	}
 	
-	public void show_Folder(String path)
-	{
-		JFileChooser fc = new JFileChooser();
-		fc.setCurrentDirectory(new java.io.File(path)); // start at application current directory
-		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		int returnVal = fc.showSaveDialog(this);
-		if(returnVal == JFileChooser.APPROVE_OPTION) {
-		    File yourFolder = fc.getSelectedFile();
-		}
-	}
+	
+	
 }
