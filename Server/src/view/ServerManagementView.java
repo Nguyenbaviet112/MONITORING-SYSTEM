@@ -22,6 +22,7 @@ import javax.swing.JList;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 public class ServerManagementView extends JFrame {
 
@@ -33,6 +34,8 @@ public class ServerManagementView extends JFrame {
 	private JList jlist;
 	public DefaultListModel listModel;
 	private JTable table_Server;
+	public DefaultTableModel defaultTableModel;
+	private JScrollPane scrollPane;
 
 
 
@@ -42,7 +45,7 @@ public class ServerManagementView extends JFrame {
 	public ServerManagementView() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1338, 763);
+		setBounds(100, 100, 1338, 764);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -79,7 +82,7 @@ public class ServerManagementView extends JFrame {
 		jlist = new JList(listModel);
 		jlist.setBackground(Color.WHITE);
 		
-		jlist.setBounds(10, 164, 144, 532);
+		jlist.setBounds(10, 176, 106, 520);
 		contentPane.add(jlist);
 		
 		JButton btn_BrowerFolder = new JButton("Brower");
@@ -87,25 +90,25 @@ public class ServerManagementView extends JFrame {
 		btn_BrowerFolder.setBounds(1141, 10, 173, 38);
 		contentPane.add(btn_BrowerFolder);
 		
-		table_Server = new JTable();
-		table_Server.setModel(new DefaultTableModel(
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(126, 176, 1243, 520);
+		contentPane.add(scrollPane);
+		
+		
+		this.defaultTableModel = new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, ""},
 			},
 			new String[] {
-				"STT", "Path Monitoring", "Time", "Action", "IP client", "Detail"
+				"STT", "Path Monitoring", "Time", "New column", "ip", "Detail"
 			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		);
+		table_Server = new JTable(defaultTableModel);
+		table_Server.getColumnModel().getColumn(1).setPreferredWidth(90);
+		scrollPane.setViewportView(table_Server);
+		
+
+		table_Server = new JTable(defaultTableModel);
 		table_Server.setFont(new Font("Arial", Font.PLAIN, 14));
-		table_Server.setBounds(202, 174, 1112, 520);
-		contentPane.add(table_Server);
 		
 		
 		
@@ -114,8 +117,8 @@ public class ServerManagementView extends JFrame {
 		
 		
 		this.show_IP_Port();
-		this.setVisible(true);
 		this.serverModel.start();
+		this.setVisible(true);
 		
 	}
 	

@@ -44,8 +44,6 @@ public class ServerView extends JFrame {
 		
 		ServerListener sl = new ServerListener(this);
 
-
-		
 		
 		btn_StartServer = new JButton("Start");
 		btn_StartServer.setFont(new Font("Arial", Font.PLAIN, 14));

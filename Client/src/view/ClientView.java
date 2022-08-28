@@ -24,6 +24,7 @@ public class ClientView extends JFrame {
 	private JTextField textField_IP;
 	private ClientModel clientModel;
 	private JButton btn_Connet_Server;
+	
 
 	/**
 	 * Launch the application.
@@ -67,12 +68,14 @@ public class ClientView extends JFrame {
 		textField_Port.setBounds(139, 13, 145, 27);
 		panel.add(textField_Port);
 		textField_Port.setColumns(10);
+		textField_Port.setText("3007");
 		
 		textField_IP = new JTextField();
 		textField_IP.setFont(new Font("Arial", Font.PLAIN, 14));
 		textField_IP.setColumns(10);
 		textField_IP.setBounds(139, 56, 145, 27);
 		panel.add(textField_IP);
+		textField_IP.setText("192.168.1.60");
 		
 		btn_Connet_Server = new JButton("Connect");
 		btn_Connet_Server.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -88,32 +91,53 @@ public class ClientView extends JFrame {
 	{
 		int Port = Integer.parseInt(textField_Port.getText()) ;
 		String IP = textField_IP.getText();
-		boolean rs = this.clientModel.ConnetServer(Port, IP);
 		
-		if (rs == false)
+		this.clientModel.ConnetServer(Port, IP);
+	
+		if (this.clientModel.check_connect == 1)
 		{
-			JOptionPane.showMessageDialog(this, "connection failed",
-	                "ERROR", JOptionPane.ERROR_MESSAGE);
-			this.clientModel.ConnetServer(Port, IP);
+			JOptionPane.showMessageDialog(this, "Connect sucessfully",
+	                "INFORMATION",
+	                JOptionPane.INFORMATION_MESSAGE);
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(this, "Successful connection",
-	                "Information", JOptionPane.INFORMATION_MESSAGE);
-			this.btn_Connet_Server.setText("Disconnect");
+			JOptionPane.showMessageDialog(this, "Connect fail",
+	                "INFORMATION",
+	                JOptionPane.ERROR_MESSAGE);
 		}
 		
 		
+		this.btn_Connet_Server.setText("Disconnect");
+		
+		
+		
 	}
 	
-	public void show_ErrorConnect()
-	{
-		JOptionPane.showMessageDialog(this, "connection failed",
-                "ERROR", JOptionPane.ERROR_MESSAGE);
-	}
 	
 	public void change_Stage()
 	{
+		int Port = Integer.parseInt(textField_Port.getText()) ;
+		String IP = textField_IP.getText();
+		
+		this.clientModel = new ClientModel();
+		
+		this.clientModel.Disconnet_Server(Port, IP);
+		
+		if (this.clientModel.check_connect == 1)
+		{
+			JOptionPane.showMessageDialog(this, "DisConnect sucessfully",
+	                "INFORMATION",
+	                JOptionPane.INFORMATION_MESSAGE);
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Disconnect fail",
+	                "INFORMATION",
+	                JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
 		this.btn_Connet_Server.setText("Connect");
 	}
 	
